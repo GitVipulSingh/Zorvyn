@@ -5,6 +5,7 @@ import { Activity } from "@/pages/Activity";
 import { Goals } from "@/pages/Goals";
 import { Insights } from "@/pages/Insights";
 import { Profile } from "@/pages/Profile";
+import { NotFound } from "@/pages/NotFound";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/goals" element={<Goals />} />
           <Route path="/insights" element={<Insights />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

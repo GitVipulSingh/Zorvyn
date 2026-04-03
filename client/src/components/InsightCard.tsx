@@ -22,14 +22,14 @@ export function InsightCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.06, duration: 0.3 }}
-      className="flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm"
+      className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4 hover:bg-white/[0.04] transition-colors"
     >
-      <div className={cn("flex h-9 w-9 items-center justify-center rounded-xl bg-gray-50 flex-shrink-0")}>
-        <Icon className={cn("h-4.5 w-4.5", accent)} strokeWidth={2} />
+      <div className={cn("flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/5 flex-shrink-0")}>
+        <Icon className={cn("h-5 w-5", accent)} strokeWidth={2} />
       </div>
       <div className="min-w-0">
-        <p className="font-semibold text-sm text-gray-900">{title}</p>
-        <p className="text-sm text-gray-500 mt-0.5 leading-relaxed">{description}</p>
+        <p className="font-semibold text-sm text-white tracking-wide">{title}</p>
+        <p className="text-sm text-gray-400 mt-1 leading-relaxed">{description}</p>
       </div>
     </motion.div>
   );

@@ -1,7 +1,6 @@
 import { useMemo } from "react";
-import { Transaction } from "@/types";
+import { Transaction, Category } from "@/types";
 import { startOfMonth } from "date-fns";
-import { Category } from "@/types";
 import { TOP_CATEGORIES_LIMIT } from "@/constants";
 
 export function useMonthlyStats(transactions: Transaction[]) {

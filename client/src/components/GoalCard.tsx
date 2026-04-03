@@ -32,68 +32,73 @@ export function GoalCard({ goal, index }: Props) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.04, duration: 0.3 }}
         className={cn(
-          "rounded-2xl border bg-white p-5 shadow-sm transition-shadow hover:shadow-md",
-          isComplete ? "border-emerald-200" : "border-gray-100"
+          "rounded-3xl glass-panel p-6 transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] relative overflow-hidden group",
+          isComplete ? "border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.05)]" : "border-white/5"
         )}
       >
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-3">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        
+        <div className="flex items-start justify-between mb-5 relative z-10">
+          <div className="flex items-center gap-4">
             <div
               className={cn(
-                "flex h-10 w-10 items-center justify-center rounded-xl flex-shrink-0",
-                isComplete ? "bg-emerald-50" : "bg-violet-50"
+                "flex h-12 w-12 items-center justify-center rounded-2xl flex-shrink-0 transition-colors duration-300",
+                isComplete ? "bg-emerald-500/10 shadow-[0_0_15px_rgba(16,185,129,0.2)]" : "bg-violet-500/10 shadow-[0_0_15px_rgba(139,92,246,0.2)]"
               )}
             >
               {isComplete ? (
-                <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+                <CheckCircle2 className="h-6 w-6 text-emerald-400" />
               ) : (
-                <Icon className="h-5 w-5 text-violet-600" strokeWidth={2} />
+                <Icon className="h-6 w-6 text-violet-400" strokeWidth={2} />
               )}
             </div>
             <div>
-              <p className="font-semibold text-sm text-gray-900">{goal.title}</p>
-              <p className="text-xs text-gray-500 mt-0.5">
-                {formatCurrency(goal.savedAmount, user.currency)}{" "}
-                <span className="text-gray-400">of</span>{" "}
+              <p className="font-semibold text-base text-white tracking-wide">{goal.title}</p>
+              <p className="text-xs text-gray-400 mt-1">
+                <span className="text-gray-200 font-medium">
+                  {formatCurrency(goal.savedAmount, user.currency)}
+                </span>
+                <span className="text-gray-500 mx-1.5">/</span>
                 {formatCurrency(goal.targetAmount, user.currency)}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {!isComplete && (
               <Button
                 variant="ghost"
-                size="icon-sm"
+                size="icon"
+                className="hover:bg-white/10"
                 aria-label="Add savings"
                 onClick={() => setSavingsOpen(true)}
               >
-                <Plus className="h-3.5 w-3.5" />
+                <Plus className="h-4 w-4 text-gray-300" />
               </Button>
             )}
             <Button
               variant="ghost"
-              size="icon-sm"
-              className="text-gray-400 hover:text-red-500 hover:bg-red-50"
+              size="icon"
+              className="hover:text-rose-400 hover:bg-rose-500/10"
               aria-label="Delete goal"
               onClick={() => setConfirmOpen(true)}
             >
-              <Trash2 className="h-3.5 w-3.5" />
+              <Trash2 className="h-4 w-4 text-gray-400" />
             </Button>
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3 relative z-10">
           <Progress
             value={percent}
-            className={isComplete ? "[&>div]:bg-emerald-500" : ""}
+            className={isComplete ? "[&>div]:bg-emerald-500 [&>div]:shadow-[0_0_12px_rgba(16,185,129,0.8)]" : ""}
           />
-          <div className="flex justify-between text-xs text-gray-500">
-            <span>{Math.round(percent)}% complete</span>
+          <div className="flex justify-between items-center text-[10px] sm:text-xs">
+            <span className="tracking-widest uppercase font-semibold text-gray-400">{Math.round(percent)}% COMPLETE</span>
             {isComplete ? (
-              <span className="text-emerald-600 font-semibold">Goal reached!</span>
+              <span className="text-emerald-400 font-bold uppercase tracking-widest drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]">Goal reached!</span>
             ) : (
-              <span>
-                {formatCurrency(goal.targetAmount - goal.savedAmount, user.currency)} to go
+              <span className="text-gray-500 tracking-wide">
+                <span className="text-gray-300">{formatCurrency(goal.targetAmount - goal.savedAmount, user.currency)}</span> to go
               </span>
             )}
           </div>
@@ -104,8 +109,11 @@ export function GoalCard({ goal, index }: Props) {
         open={savingsOpen}
         onOpenChange={setSavingsOpen}
         goalTitle={goal.title}
+        maxAmount={goal.targetAmount - goal.savedAmount}
         onConfirm={(amount) =>
-          updateGoal(goal.id, { savedAmount: goal.savedAmount + amount })
+          updateGoal(goal.id, {
+            savedAmount: Math.min(goal.savedAmount + amount, goal.targetAmount),
+          })
         }
       />
 

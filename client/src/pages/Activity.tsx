@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Plus } from "lucide-react";
 import { useFinanceStore } from "@/store/useFinanceStore";
 import { useMonthlyStats } from "@/hooks/useMonthlyStats";
@@ -8,21 +7,17 @@ import { formatCurrency } from "@/utils/format";
 import { Button } from "@/components/ui/button";
 
 export function Activity() {
-  const { transactions, user, loadTransactions } = useFinanceStore();
+  const { transactions, user } = useFinanceStore();
   const { monthlyTotal } = useMonthlyStats(transactions);
-
-  useEffect(() => {
-    loadTransactions();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Activity</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="text-3xl font-bold text-white tracking-wide">Activity</h1>
+          <p className="text-sm text-gray-400 mt-1">
             {transactions.length} transaction{transactions.length !== 1 ? "s" : ""} &middot; This month:{" "}
-            <span className="font-semibold text-gray-700">
+            <span className="font-semibold text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.2)]">
               {formatCurrency(monthlyTotal, user.currency)}
             </span>
           </p>
@@ -37,7 +32,7 @@ export function Activity() {
         />
       </div>
 
-      <div className="rounded-2xl border border-gray-100 bg-white shadow-sm p-5">
+      <div className="rounded-3xl border border-white/5 bg-white/[0.02] shadow-sm p-5 sm:p-6 backdrop-blur-md">
         <ExpenseList />
       </div>
     </div>

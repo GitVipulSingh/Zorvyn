@@ -29,13 +29,13 @@ export function ConfirmDialog({
       <DialogContent className="max-w-sm">
         <DialogHeader>
           <div className="flex items-center gap-3 mb-1">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-50">
-              <AlertTriangle className="h-4.5 w-4.5 text-red-500" strokeWidth={2} />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/10 border border-rose-500/20">
+              <AlertTriangle className="h-5 w-5 text-rose-400 drop-shadow-[0_0_8px_rgba(244,63,94,0.4)]" strokeWidth={2} />
             </div>
             <DialogTitle>{title}</DialogTitle>
           </div>
         </DialogHeader>
-        <p className="text-sm text-gray-500 mb-4">{description}</p>
+        <p className="text-sm text-gray-400 mb-5 leading-relaxed">{description}</p>
         <div className="flex gap-2">
           <Button
             variant="outline"

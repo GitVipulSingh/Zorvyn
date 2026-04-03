@@ -1,5 +1,5 @@
 export function formatCurrency(amount: number, currency = "USD"): string {
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat(undefined, {
     style: "currency",
     currency,
     minimumFractionDigits: 0,
@@ -8,5 +8,13 @@ export function formatCurrency(amount: number, currency = "USD"): string {
 }
 
 export function generateId(): string {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+  return crypto.randomUUID();
+}
+
+export function getCurrencySymbol(currency = "USD"): string {
+  return (
+    new Intl.NumberFormat(undefined, { style: "currency", currency })
+      .formatToParts(0)
+      .find((p) => p.type === "currency")?.value ?? "$"
+  );
 }

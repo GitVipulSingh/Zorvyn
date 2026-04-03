@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Category, Transaction } from "@/types";
 import { useFinanceStore } from "@/store/useFinanceStore";
 
+const MAX_NOTE_LENGTH = 200;
+
 interface FormState {
   amount: string;
   category: Category;
@@ -19,7 +21,7 @@ export function useTransactionForm({ editData, onSuccess }: UseTransactionFormOp
 
   const [form, setForm] = useState<FormState>({
     amount: editData?.amount?.toString() ?? "",
-    category: editData?.category ?? "Food",
+    category: editData?.category ?? "Food & Dining",
     date: editData?.date?.slice(0, 10) ?? new Date().toISOString().slice(0, 10),
     note: editData?.note ?? "",
   });
@@ -34,7 +36,7 @@ export function useTransactionForm({ editData, onSuccess }: UseTransactionFormOp
   const reset = () => {
     setForm({
       amount: "",
-      category: "Food",
+      category: "Food & Dining",
       date: new Date().toISOString().slice(0, 10),
       note: "",
     });
@@ -48,11 +50,16 @@ export function useTransactionForm({ editData, onSuccess }: UseTransactionFormOp
       return false;
     }
 
+    if (!form.date) {
+      setError("Please select a date");
+      return false;
+    }
+
     const payload = {
       amount: parsed,
       category: form.category,
       date: form.date,
-      note: form.note.trim(),
+      note: form.note.trim().slice(0, MAX_NOTE_LENGTH),
     };
 
     if (editData) {

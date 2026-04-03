@@ -25,12 +25,12 @@ export function ExpenseList({ limit }: Props) {
 
   if (transactions.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-100 mb-4">
-          <Receipt className="h-6 w-6 text-gray-400" />
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/5 border border-white/5 shadow-[0_0_15px_rgba(255,255,255,0.02)] mb-5">
+          <Receipt className="h-7 w-7 text-gray-500" />
         </div>
-        <p className="font-semibold text-gray-700">No transactions yet</p>
-        <p className="text-sm text-gray-400 mt-1">
+        <p className="font-semibold text-white tracking-wide">No transactions yet</p>
+        <p className="text-sm text-gray-400 mt-1.5">
           Add your first expense to get started
         </p>
       </div>
@@ -39,11 +39,14 @@ export function ExpenseList({ limit }: Props) {
 
   return (
     <>
+      {/* Controlled edit modal — opens when editTx is set */}
       {editTx && (
         <AddExpenseModal
+          open={!!editTx}
+          onOpenChange={(open) => {
+            if (!open) setEditTx(null);
+          }}
           editData={editTx}
-          onClose={() => setEditTx(null)}
-          trigger={<span className="hidden" />}
         />
       )}
 
@@ -76,7 +79,10 @@ export function ExpenseList({ limit }: Props) {
             <div className="space-y-1.5">
               <AnimatePresence initial={false}>
                 {txs.map((tx) => {
-                  const { icon: Icon, bg, text } = categoryConfig[tx.category];
+                  const meta = categoryConfig[tx.category];
+                  const Icon = meta?.icon;
+                  const bg = meta?.bg ?? "bg-gray-50";
+                  const text = meta?.text ?? "text-gray-600";
                   return (
                     <motion.div
                       key={tx.id}
@@ -84,46 +90,48 @@ export function ExpenseList({ limit }: Props) {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, height: 0, marginBottom: 0 }}
                       layout
-                      className="flex items-center gap-3 rounded-xl border border-gray-100 bg-white px-4 py-3 hover:border-gray-200 hover:shadow-sm transition-all group"
+                      className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/5 px-5 py-3.5 hover:border-white/10 hover:bg-white/[0.07] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-300 group relative overflow-hidden"
                     >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       <div
                         className={cn(
-                          "flex h-9 w-9 items-center justify-center rounded-xl flex-shrink-0",
+                          "flex h-11 w-11 items-center justify-center rounded-2xl flex-shrink-0 relative z-10",
                           bg
                         )}
                       >
-                        <Icon className={cn("h-4 w-4", text)} strokeWidth={2} />
+                        {Icon && <Icon className={cn("h-5 w-5", text)} strokeWidth={2} />}
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm text-gray-900 truncate">
+                      <div className="flex-1 min-w-0 relative z-10">
+                        <p className="font-semibold text-sm text-white tracking-wide truncate">
                           {tx.category}
                         </p>
                         {tx.note && (
-                          <p className="text-xs text-gray-400 truncate mt-0.5">
+                          <p className="text-xs text-gray-400 truncate mt-1">
                             {tx.note}
                           </p>
                         )}
                       </div>
-                      <p className="font-semibold text-sm text-gray-900 flex-shrink-0">
+                      <p className="font-bold text-sm text-white flex-shrink-0 relative z-10 drop-shadow-[0_0_10px_rgba(255,255,255,0.15)]">
                         -{formatCurrency(tx.amount, user.currency)}
                       </p>
-                      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-1">
+                      <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-2 relative z-10">
                         <Button
                           variant="ghost"
                           size="icon-sm"
+                          className="hover:bg-white/10"
                           aria-label="Edit"
                           onClick={() => setEditTx(tx)}
                         >
-                          <Pencil className="h-3.5 w-3.5" />
+                          <Pencil className="h-4 w-4 text-gray-300" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon-sm"
-                          className="text-gray-400 hover:text-red-500 hover:bg-red-50"
+                          className="hover:text-rose-400 hover:bg-rose-500/10"
                           aria-label="Delete"
                           onClick={() => setDeleteTx(tx)}
                         >
-                          <Trash2 className="h-3.5 w-3.5" />
+                          <Trash2 className="h-4 w-4 text-gray-400" />
                         </Button>
                       </div>
                     </motion.div>

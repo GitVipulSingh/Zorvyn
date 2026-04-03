@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   PieChart,
@@ -20,29 +19,25 @@ import { MoodIndicator } from "@/components/MoodIndicator";
 import { formatCurrency } from "@/utils/format";
 
 export function Insights() {
-  const { transactions, user, loadTransactions } = useFinanceStore();
+  const { transactions, user } = useFinanceStore();
   const { chartData, insights } = useInsights(transactions, user);
-
-  useEffect(() => {
-    loadTransactions();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Insights</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Your spending story this month</p>
+        <h1 className="text-3xl font-bold text-white tracking-wide">Insights</h1>
+        <p className="text-sm text-gray-400 mt-1">Your spending story this month</p>
       </div>
 
       <MoodIndicator />
 
       {transactions.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-100 mb-4">
-            <BarChart3 className="h-6 w-6 text-gray-400" />
+        <div className="flex flex-col items-center justify-center py-24 text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/5 border border-white/5 shadow-[0_0_15px_rgba(255,255,255,0.02)] mb-5">
+            <BarChart3 className="h-7 w-7 text-gray-500" />
           </div>
-          <p className="font-semibold text-gray-700">No data yet</p>
-          <p className="text-sm text-gray-400 mt-1">
+          <p className="font-semibold text-white tracking-wide">No data yet</p>
+          <p className="text-sm text-gray-400 mt-1.5">
             Add some expenses to see your insights
           </p>
         </div>
@@ -56,48 +51,53 @@ export function Insights() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"
+                className="rounded-3xl border border-white/5 bg-white/[0.02] p-5 sm:p-6 shadow-sm backdrop-blur-md"
               >
-                <p className="text-sm font-semibold text-gray-900 mb-4">
+                <p className="text-sm font-bold tracking-wide text-white mb-5">
                   Spending by Category
                 </p>
-                <ResponsiveContainer width="100%" height={200}>
+                <ResponsiveContainer width="100%" height={220}>
                   <PieChart>
                     <Pie
                       data={chartData}
                       cx="50%"
                       cy="50%"
-                      innerRadius={60}
-                      outerRadius={88}
-                      paddingAngle={2}
+                      innerRadius={65}
+                      outerRadius={95}
+                      paddingAngle={3}
                       dataKey="value"
+                      stroke="none"
                     >
                       {chartData.map((item, i) => (
-                        <Cell key={i} fill={item.color} strokeWidth={0} />
+                        <Cell key={i} fill={item.color} style={{ filter: `drop-shadow(0px 0px 8px ${item.color}80)` }} />
                       ))}
                     </Pie>
                     <Tooltip
-                      formatter={(value: number) =>
+                      formatter={(value: any) =>
                         formatCurrency(value, user.currency)
                       }
                       contentStyle={{
-                        borderRadius: "12px",
-                        border: "1px solid #e5e7eb",
-                        boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.05)",
-                        fontSize: "12px",
+                        borderRadius: "16px",
+                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        boxShadow: "0 8px 30px rgba(0, 0, 0, 0.4)",
+                        fontSize: "13px",
+                        backgroundColor: "rgba(20, 20, 30, 0.95)",
+                        color: "white",
+                        padding: "10px 14px",
                       }}
+                      itemStyle={{ color: "white", fontWeight: 500 }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-3">
+                <div className="flex flex-wrap gap-x-4 gap-y-2 mt-4 justify-center">
                   {chartData.map((item) => (
                     <div
                       key={item.name}
-                      className="flex items-center gap-1.5 text-xs text-gray-600"
+                      className="flex items-center gap-2 text-xs font-medium text-gray-300 tracking-wide"
                     >
                       <span
-                        className="h-2 w-2 rounded-full flex-shrink-0"
-                        style={{ backgroundColor: item.color }}
+                        className="h-2 w-2 rounded-full flex-shrink-0 shadow-[0_0_5px_currentColor]"
+                        style={{ backgroundColor: item.color, color: item.color }}
                       />
                       {item.name}
                     </div>
@@ -110,46 +110,50 @@ export function Insights() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.05 }}
-                className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"
+                className="rounded-3xl border border-white/5 bg-white/[0.02] p-5 sm:p-6 shadow-sm backdrop-blur-md"
               >
-                <p className="text-sm font-semibold text-gray-900 mb-4">
+                <p className="text-sm font-bold tracking-wide text-white mb-5">
                   Amount by Category
                 </p>
-                <ResponsiveContainer width="100%" height={200}>
+                <ResponsiveContainer width="100%" height={220}>
                   <BarChart
                     data={chartData}
-                    margin={{ top: 0, right: 0, left: -20, bottom: 0 }}
+                    margin={{ top: 0, right: 0, left: -10, bottom: 0 }}
                   >
                     <CartesianGrid
                       strokeDasharray="3 3"
-                      stroke="#f3f4f6"
+                      stroke="rgba(255,255,255,0.05)"
                       vertical={false}
                     />
                     <XAxis
                       dataKey="name"
-                      tick={{ fontSize: 10, fill: "#9ca3af" }}
+                      tick={{ fontSize: 10, fill: "rgba(255,255,255,0.4)" }}
                       tickLine={false}
                       axisLine={false}
                       interval={0}
                       tickFormatter={(v: string) => v.split(" ")[0]}
                     />
                     <YAxis
-                      tick={{ fontSize: 10, fill: "#9ca3af" }}
+                      tick={{ fontSize: 10, fill: "rgba(255,255,255,0.4)" }}
                       tickLine={false}
                       axisLine={false}
                       tickFormatter={(v: number) => `$${v}`}
                     />
                     <Tooltip
-                      formatter={(value: number) =>
+                      formatter={(value: any) =>
                         formatCurrency(value, user.currency)
                       }
                       contentStyle={{
-                        borderRadius: "12px",
-                        border: "1px solid #e5e7eb",
-                        boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.05)",
-                        fontSize: "12px",
+                        borderRadius: "16px",
+                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        boxShadow: "0 8px 30px rgba(0, 0, 0, 0.4)",
+                        fontSize: "13px",
+                        backgroundColor: "rgba(20, 20, 30, 0.95)",
+                        color: "white",
+                        padding: "10px 14px",
                       }}
-                      cursor={{ fill: "#f9fafb" }}
+                      itemStyle={{ color: "white", fontWeight: 500 }}
+                      cursor={{ fill: "rgba(255,255,255,0.03)" }}
                     />
                     <Bar dataKey="value" radius={[6, 6, 0, 0]}>
                       {chartData.map((item, i) => (
@@ -163,9 +167,9 @@ export function Insights() {
           )}
 
           {/* Insight cards */}
-          <div>
-            <h2 className="text-sm font-semibold text-gray-700 mb-3">Key Takeaways</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="pt-2">
+            <h2 className="text-sm font-bold tracking-wide text-white mb-4">Key Takeaways</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {insights.map((insight, i) => (
                 <InsightCard key={i} {...insight} index={i} />
               ))}

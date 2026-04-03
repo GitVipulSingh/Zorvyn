@@ -1,13 +1,26 @@
 import { UserPreferences } from "@/types";
 import { STORAGE_KEYS, USER_DEFAULTS } from "@/constants";
 
+function isValidUserPreferences(u: unknown): u is UserPreferences {
+  if (typeof u !== "object" || u === null) return false;
+  const obj = u as Record<string, unknown>;
+  return (
+    typeof obj.name === "string" &&
+    typeof obj.monthlyBudget === "number" &&
+    typeof obj.currency === "string"
+  );
+}
+
 export const userService = {
   get(): UserPreferences {
     try {
       const raw = localStorage.getItem(STORAGE_KEYS.USER);
-      return raw ? (JSON.parse(raw) as UserPreferences) : { ...USER_DEFAULTS };
-    } catch {
-      console.error("Failed to load user preferences");
+      if (!raw) return { ...USER_DEFAULTS };
+      const parsed = JSON.parse(raw);
+      if (!isValidUserPreferences(parsed)) return { ...USER_DEFAULTS };
+      return parsed;
+    } catch (e) {
+      console.error("Failed to load user preferences:", e);
       return { ...USER_DEFAULTS };
     }
   },
@@ -15,8 +28,8 @@ export const userService = {
   save(prefs: UserPreferences): void {
     try {
       localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(prefs));
-    } catch {
-      console.error("Failed to save user preferences");
+    } catch (e) {
+      console.error("Failed to save user preferences:", e);
     }
   },
 };

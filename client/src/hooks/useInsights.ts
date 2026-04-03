@@ -7,11 +7,10 @@ import {
   Gauge,
   type LucideIcon,
 } from "lucide-react";
-import { Transaction, UserPreferences } from "@/types";
+import { Transaction, Category, UserPreferences } from "@/types";
 import { categoryConfig } from "@/utils/categoryConfig";
 import { formatCurrency } from "@/utils/format";
 import { CHART_COLORS } from "@/constants";
-import { Category } from "@/types";
 import { startOfMonth, subMonths, format } from "date-fns";
 
 export interface InsightItem {
@@ -29,8 +28,9 @@ export interface ChartDataItem {
 
 export function useInsights(transactions: Transaction[], user: UserPreferences) {
   return useMemo(() => {
-    const monthStart = startOfMonth(new Date());
-    const lastMonthStart = startOfMonth(subMonths(new Date(), 1));
+    const now = new Date();
+    const monthStart = startOfMonth(now);
+    const lastMonthStart = startOfMonth(subMonths(now, 1));
 
     const thisMonth = transactions.filter((t) => new Date(t.date) >= monthStart);
     const lastMonth = transactions.filter(
@@ -86,7 +86,7 @@ export function useInsights(transactions: Transaction[], user: UserPreferences) 
     }
 
     if (thisMonth.length > 0) {
-      const dayOfMonth = new Date().getDate();
+      const dayOfMonth = now.getDate();
       const avgPerDay = thisTotal / dayOfMonth;
       insights.push({
         icon: Calendar,
@@ -98,12 +98,12 @@ export function useInsights(transactions: Transaction[], user: UserPreferences) 
 
     if (user.monthlyBudget > 0 && thisTotal > 0) {
       const remaining = user.monthlyBudget - thisTotal;
-      const daysLeft =
-        new Date(
-          new Date().getFullYear(),
-          new Date().getMonth() + 1,
-          0
-        ).getDate() - new Date().getDate();
+      const daysInMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() + 1,
+        0
+      ).getDate();
+      const daysLeft = daysInMonth - now.getDate();
       if (remaining > 0 && daysLeft > 0) {
         insights.push({
           icon: Gauge,

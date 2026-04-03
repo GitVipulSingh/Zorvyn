@@ -22,12 +22,6 @@ export const CHART_COLORS = [
   "#0891b2",
 ] as const;
 
-// Goal icon keys (mapped to Lucide icons in categoryConfig)
-export const GOAL_ICON_KEYS = [
-  "home", "plane", "car", "laptop", "smartphone",
-  "graduation-cap", "heart", "dumbbell", "palmtree", "piggy-bank",
-] as const;
-
 export const USER_DEFAULTS = {
   name: "Friend",
   monthlyBudget: 3000,
