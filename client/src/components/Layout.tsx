@@ -115,8 +115,8 @@ export function Layout() {
         </main>
 
         {/* Bottom nav — mobile only */}
-        <nav className="lg:hidden fixed bottom-4 left-4 right-4 z-50 glass-panel-elevated rounded-2xl border border-white/10">
-          <div className="flex items-center justify-around px-2 py-2">
+        <nav className="lg:hidden fixed bottom-3 left-3 right-3 z-50 glass-panel-elevated rounded-2xl border border-white/10">
+          <div className="flex items-center justify-around px-1 py-1.5">
             {navItems.map(({ to, icon: Icon, label }) => (
               <NavLink
                 key={to}
@@ -124,18 +124,23 @@ export function Layout() {
                 end={to === "/"}
                 className={({ isActive }) =>
                   cn(
-                    "flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all duration-300 text-[10px] uppercase tracking-wider font-semibold",
-                    isActive ? "text-white bg-white/10" : "text-gray-500 hover:text-white"
+                    "flex flex-col items-center justify-center gap-0.5 flex-1 py-2 rounded-xl transition-all duration-200 min-w-0",
+                    isActive ? "text-white bg-white/10" : "text-gray-500"
                   )
                 }
               >
                 {({ isActive }) => (
                   <>
                     <Icon
-                      className={cn("h-5 w-5 mb-0.5 transition-colors duration-300", isActive ? "text-blue-400" : "")}
+                      className={cn("h-5 w-5 flex-shrink-0 transition-colors duration-200", isActive ? "text-blue-400" : "text-gray-500")}
                       strokeWidth={isActive ? 2.5 : 2}
                     />
-                    {label}
+                    <span className={cn(
+                      "text-[9px] font-semibold uppercase tracking-wide leading-none truncate w-full text-center transition-colors duration-200",
+                      isActive ? "text-white" : "text-gray-500"
+                    )}>
+                      {label}
+                    </span>
                   </>
                 )}
               </NavLink>
