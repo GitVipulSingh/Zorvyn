@@ -109,7 +109,7 @@ export function Layout() {
 
         {/* Page */}
         <main className="flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-5xl px-4 py-5 lg:px-6 pb-28 lg:pb-8">
+          <div className="mx-auto max-w-7xl px-4 py-5 lg:px-8 pb-28 lg:pb-8">
             <Outlet />
           </div>
         </main>

@@ -16,12 +16,13 @@ import { useFinanceStore } from "@/store/useFinanceStore";
 import { useInsights } from "@/hooks/useInsights";
 import { InsightCard } from "@/components/InsightCard";
 import { WellnessCard } from "@/components/WellnessCard";
+import { BudgetRuleCard } from "@/components/BudgetRuleCard";
 import { useWellnessScore } from "@/hooks/useWellnessScore";
 import { formatCurrency } from "@/utils/format";
 
 export function Insights() {
   const { transactions, user } = useFinanceStore();
-  const { chartData, insights } = useInsights(transactions, user);
+  const { chartData, insights, thisMonth } = useInsights(transactions, user);
   const wellnessData = useWellnessScore(transactions, user);
 
   return (
@@ -31,7 +32,10 @@ export function Insights() {
         <p className="text-sm text-gray-400 mt-1">Your spending story this month</p>
       </div>
 
-      <WellnessCard data={wellnessData} />
+      <div className="space-y-4">
+        <WellnessCard data={wellnessData} />
+        {thisMonth && <BudgetRuleCard user={user} thisMonthTransactions={thisMonth} />}
+      </div>
 
       {transactions.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-center">

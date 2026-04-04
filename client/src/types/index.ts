@@ -32,5 +32,6 @@ export type Mood = "Good" | "Okay" | "Warning";
 export interface UserPreferences {
   name: string;
   monthlyBudget: number;
+  monthlyIncome?: number;
   currency: string;
 }

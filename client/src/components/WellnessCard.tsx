@@ -75,32 +75,35 @@ export function WellnessCard({ data }: Props) {
 
         {/* Text Breakdown */}
         <div className="flex-1 text-center md:text-left min-w-0">
-          <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
+          <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
             <Activity className="h-4 w-4 text-blue-400" />
             <h2 className="text-base font-bold text-white tracking-wide">
               Financial Wellness Score
             </h2>
           </div>
-          <p className="text-sm text-gray-400 leading-relaxed mb-5">
+          <p className="text-[11px] text-gray-500 mb-2">
+            A score (0-100) based on your budget, rewarding Growth and penalizing Regrets.
+          </p>
+          <p className="text-sm text-gray-300 leading-relaxed mb-5 border-l-2 border-blue-500/50 pl-2">
             {data.message}
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3">
-              <p className="text-[10px] font-bold text-blue-400/80 uppercase tracking-widest mb-1">Needs</p>
-              <p className="text-sm font-bold text-blue-100">{formatCurrency(data.breakdown.need, user.currency)}</p>
+            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 min-w-0">
+              <p className="text-[10px] font-bold text-blue-400/80 uppercase tracking-widest mb-1 truncate">Needs</p>
+              <p className="text-sm font-bold text-blue-100 truncate">{formatCurrency(data.breakdown.need, user.currency)}</p>
             </div>
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3">
-              <p className="text-[10px] font-bold text-blue-400/80 uppercase tracking-widest mb-1">Wants</p>
-              <p className="text-sm font-bold text-blue-100">{formatCurrency(data.breakdown.want, user.currency)}</p>
+            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 min-w-0">
+              <p className="text-[10px] font-bold text-blue-400/80 uppercase tracking-widest mb-1 truncate">Wants</p>
+              <p className="text-sm font-bold text-blue-100 truncate">{formatCurrency(data.breakdown.want, user.currency)}</p>
             </div>
-            <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3">
-              <p className="text-[10px] font-bold text-emerald-400/80 uppercase tracking-widest mb-1">Growth</p>
-              <p className="text-sm font-bold text-emerald-100">{formatCurrency(data.breakdown.investment, user.currency)}</p>
+            <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 min-w-0">
+              <p className="text-[10px] font-bold text-emerald-400/80 uppercase tracking-widest mb-1 truncate">Growth</p>
+              <p className="text-sm font-bold text-emerald-100 truncate">{formatCurrency(data.breakdown.investment, user.currency)}</p>
             </div>
-            <div className="bg-rose-500/10 border border-rose-500/20 rounded-xl p-3">
-              <p className="text-[10px] font-bold text-rose-400/80 uppercase tracking-widest mb-1">Regrets</p>
-              <p className="text-sm font-bold text-rose-100">{formatCurrency(data.breakdown.regret, user.currency)}</p>
+            <div className="bg-rose-500/10 border border-rose-500/20 rounded-xl p-3 min-w-0">
+              <p className="text-[10px] font-bold text-rose-400/80 uppercase tracking-widest mb-1 truncate">Regrets</p>
+              <p className="text-sm font-bold text-rose-100 truncate">{formatCurrency(data.breakdown.regret, user.currency)}</p>
             </div>
           </div>
         </div>

@@ -33,6 +33,14 @@ export function Goals() {
 
   const formatIconName = (k: string) => k.charAt(0).toUpperCase() + k.slice(1).replace('-', ' ');
 
+  const handleQuickStart = () => {
+    setIconKey("piggy-bank");
+    const assumedIncome = user.monthlyIncome || user.monthlyBudget || 3000;
+    setTarget((assumedIncome * 3).toString());
+    setDescription("3 months of living expenses");
+    setOpen(true);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -230,14 +238,21 @@ export function Goals() {
       )}
 
       {goals.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-12 text-center">
+        <div className="flex flex-col items-center justify-center py-12 text-center mt-8">
           <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/5 border border-white/5 shadow-[0_0_15px_rgba(255,255,255,0.02)] mb-5">
             <Target className="h-7 w-7 text-gray-500" />
           </div>
-          <p className="font-semibold text-white tracking-wide">No goals yet</p>
-          <p className="text-sm text-gray-400 mt-1.5">
-            Set a savings goal and track your progress
+          <p className="font-semibold text-white tracking-wide text-lg">No goals yet</p>
+          <p className="text-sm text-gray-400 mt-1.5 mb-8 max-w-sm mx-auto leading-relaxed">
+            Set a savings goal and track your progress to build strong financial habits.
           </p>
+          
+          <Button 
+            onClick={handleQuickStart}
+            className="bg-emerald-600 hover:bg-emerald-500 hover:text-white text-white/90 shadow-[0_0_20px_rgba(52,211,153,0.15)] hover:shadow-[0_0_30px_rgba(52,211,153,0.3)] transition-all border border-emerald-500/20"
+          >
+             Quick Start: Emergency Fund
+          </Button>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

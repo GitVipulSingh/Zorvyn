@@ -24,6 +24,7 @@ export const CHART_COLORS = [
 
 export const USER_DEFAULTS = {
   name: "Friend",
+  monthlyIncome: 4500,
   monthlyBudget: 3000,
   currency: "USD",
 } as const;
