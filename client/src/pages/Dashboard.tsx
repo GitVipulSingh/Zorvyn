@@ -19,18 +19,18 @@ export function Dashboard() {
   return (
     <div className="space-y-4">
       {/* Page header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-white tracking-wide">
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-wide truncate">
             Good to see you, <span className="text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.3)]">{user.name}</span>
           </h1>
-          <p className="text-sm text-gray-400 mt-1">
+          <p className="text-sm text-gray-400 mt-0.5">
             Here's your financial overview
           </p>
         </div>
         <AddExpenseModal
           trigger={
-            <Button className="gap-2 hidden sm:flex">
+            <Button className="gap-2 hidden sm:flex shrink-0">
               <Plus className="h-4 w-4" />
               Add Expense
             </Button>

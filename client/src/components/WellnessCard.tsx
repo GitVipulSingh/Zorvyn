@@ -34,7 +34,7 @@ export function WellnessCard({ data }: Props) {
       transition={{ duration: 0.4 }}
       className="rounded-3xl border border-white/5 bg-gradient-to-br from-white/[0.04] to-transparent p-4 sm:p-5 shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-md relative overflow-hidden"
     >
-      <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
+      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 relative z-10">
         
         {/* Radial Progress */}
         <div className="relative flex items-center justify-center flex-shrink-0">
@@ -74,8 +74,8 @@ export function WellnessCard({ data }: Props) {
         </div>
 
         {/* Text Breakdown */}
-        <div className="flex-1 text-center md:text-left min-w-0">
-          <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
+        <div className="flex-1 text-center sm:text-left min-w-0 w-full">
+          <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
             <Activity className="h-4 w-4 text-blue-400" />
             <h2 className="text-base font-bold text-white tracking-wide">
               Financial Wellness Score

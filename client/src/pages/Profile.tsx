@@ -58,8 +58,8 @@ export function Profile() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-white tracking-wide">Settings</h1>
-        <p className="text-sm text-gray-400 mt-1">Manage your preferences</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">Settings</h1>
+        <p className="text-sm text-gray-400 mt-0.5">Manage your preferences</p>
       </div>
 
       {/* Stats row — full width */}

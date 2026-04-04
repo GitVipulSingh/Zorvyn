@@ -101,8 +101,8 @@ export function AddExpenseModal({
           onSubmit={handleSubmit}
           className="space-y-4"
         >
-          {/* Amount and Category horizontally on desktop */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Amount and Category — stacked on mobile, side-by-side on sm+ */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <Label htmlFor="amount">Amount</Label>
               <div className="relative">

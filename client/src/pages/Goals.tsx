@@ -86,16 +86,14 @@ export function Goals() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-white tracking-wide">Goals</h1>
-          <p className="text-sm text-gray-400 mt-1">
-            Track what you're saving for
-          </p>
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">Goals</h1>
+          <p className="text-sm text-gray-400 mt-0.5">Track what you're saving for</p>
         </div>
         <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) setFormError(null); }}>
           <DialogTrigger asChild>
-            <Button className="gap-2">
+            <Button className="gap-2 hidden sm:flex shrink-0">
               <Plus className="h-4 w-4" />
               New Goal
             </Button>
@@ -221,17 +219,14 @@ export function Goals() {
           {[
             { label: "Active Goals", value: String(goals.length) },
             { label: "Completed", value: String(completedGoals) },
-            {
-              label: "Total Saved",
-              value: formatCurrency(totalSaved, user.currency),
-            },
+            { label: "Total Saved", value: formatCurrency(totalSaved, user.currency) },
           ].map((s) => (
             <div
               key={s.label}
-              className="rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-4 shadow-sm text-center"
+              className="rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-3 sm:p-4 shadow-sm text-center"
             >
-              <p className="text-2xl font-bold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]">{s.value}</p>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">{s.label}</p>
+              <p className="text-lg sm:text-2xl font-bold text-white truncate">{s.value}</p>
+              <p className="text-[9px] sm:text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">{s.label}</p>
             </div>
           ))}
         </div>
@@ -239,19 +234,18 @@ export function Goals() {
 
       {goals.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-center mt-8">
-          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/5 border border-white/5 shadow-[0_0_15px_rgba(255,255,255,0.02)] mb-5">
+          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/5 border border-white/5 mb-5">
             <Target className="h-7 w-7 text-gray-500" />
           </div>
           <p className="font-semibold text-white tracking-wide text-lg">No goals yet</p>
-          <p className="text-sm text-gray-400 mt-1.5 mb-8 max-w-sm mx-auto leading-relaxed">
+          <p className="text-sm text-gray-400 mt-1.5 mb-8 max-w-xs mx-auto leading-relaxed">
             Set a savings goal and track your progress to build strong financial habits.
           </p>
-          
-          <Button 
+          <Button
             onClick={handleQuickStart}
-            className="bg-emerald-600 hover:bg-emerald-500 hover:text-white text-white/90 shadow-[0_0_20px_rgba(52,211,153,0.15)] hover:shadow-[0_0_30px_rgba(52,211,153,0.3)] transition-all border border-emerald-500/20"
+            className="bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_20px_rgba(52,211,153,0.15)] hover:shadow-[0_0_30px_rgba(52,211,153,0.3)] transition-all border border-emerald-500/20"
           >
-             Quick Start: Emergency Fund
+            Quick Start: Emergency Fund
           </Button>
         </div>
       ) : (
@@ -261,6 +255,15 @@ export function Goals() {
           ))}
         </div>
       )}
+
+      {/* Mobile FAB */}
+      <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) setFormError(null); }}>
+        <DialogTrigger asChild>
+          <button className="fixed bottom-20 right-4 z-30 sm:hidden flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-[0_0_20px_rgba(59,130,246,0.6)]">
+            <Plus className="h-6 w-6" />
+          </button>
+        </DialogTrigger>
+      </Dialog>
     </div>
   );
 }

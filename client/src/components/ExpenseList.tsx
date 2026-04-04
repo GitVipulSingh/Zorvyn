@@ -120,7 +120,7 @@ export function ExpenseList({ limit }: Props) {
                       <p className="font-bold text-sm text-white flex-shrink-0 relative z-10 drop-shadow-[0_0_10px_rgba(255,255,255,0.15)]">
                         -{formatCurrency(tx.amount, user.currency)}
                       </p>
-                      <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-2 relative z-10">
+                      <div className="flex gap-1.5 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 ml-2 relative z-10">
                         <Button
                           variant="ghost"
                           size="icon-sm"
