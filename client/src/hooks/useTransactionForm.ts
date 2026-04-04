@@ -9,6 +9,7 @@ interface FormState {
   category: Category;
   date: string;
   note: string;
+  intent: string;
 }
 
 interface UseTransactionFormOptions {
@@ -24,6 +25,7 @@ export function useTransactionForm({ editData, onSuccess }: UseTransactionFormOp
     category: editData?.category ?? "Food & Dining",
     date: editData?.date?.slice(0, 10) ?? new Date().toISOString().slice(0, 10),
     note: editData?.note ?? "",
+    intent: editData?.intent ?? "",
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -39,6 +41,7 @@ export function useTransactionForm({ editData, onSuccess }: UseTransactionFormOp
       category: "Food & Dining",
       date: new Date().toISOString().slice(0, 10),
       note: "",
+      intent: "",
     });
     setError(null);
   };
@@ -60,6 +63,7 @@ export function useTransactionForm({ editData, onSuccess }: UseTransactionFormOp
       category: form.category,
       date: form.date,
       note: form.note.trim().slice(0, MAX_NOTE_LENGTH),
+      ...(form.intent ? { intent: form.intent as any } : {}),
     };
 
     if (editData) {

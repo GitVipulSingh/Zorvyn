@@ -81,7 +81,7 @@ export function useInsights(transactions: Transaction[], user: UserPreferences) 
         icon: catIcon,
         title: `${top.name} is your top category`,
         description: `${pct}% of your spending this month — ${formatCurrency(top.value, user.currency)} total.`,
-        accent: "text-violet-600",
+        accent: "text-blue-600",
       });
     }
 

@@ -28,12 +28,16 @@ export function Goals() {
   const [target, setTarget] = useState("");
   const [saved, setSaved] = useState("");
   const [iconKey, setIconKey] = useState("home");
+  const [description, setDescription] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
+
+  const formatIconName = (k: string) => k.charAt(0).toUpperCase() + k.slice(1).replace('-', ' ');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const trimmedTitle = title.trim().slice(0, MAX_GOAL_TITLE_LENGTH);
+    const finalTitle = iconKey === 'other' ? title.trim() : formatIconName(iconKey);
+    const trimmedTitle = finalTitle.slice(0, MAX_GOAL_TITLE_LENGTH);
     if (!trimmedTitle) {
       setFormError("Please enter a goal name");
       return;
@@ -56,11 +60,13 @@ export function Goals() {
       targetAmount: parsedTarget,
       savedAmount: Math.min(parsedSaved, parsedTarget),
       iconKey,
+      description: description.trim() || undefined,
     });
     setOpen(false);
     setTitle("");
     setTarget("");
     setSaved("");
+    setDescription("");
     setIconKey("home");
     setFormError(null);
   };
@@ -71,7 +77,7 @@ export function Goals() {
   ).length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-white tracking-wide">Goals</h1>
@@ -100,39 +106,56 @@ export function Goals() {
               {/* Icon picker */}
               <div className="space-y-1.5">
                 <Label>Icon</Label>
-                <div className="grid grid-cols-5 gap-2">
+                <div className="grid grid-cols-6 gap-2">
                   {GOAL_ICON_OPTIONS.map((key) => {
                     const Icon = getGoalIcon(key);
                     return (
-                      <button
-                        key={key}
-                        type="button"
-                        aria-label={key}
-                        aria-pressed={iconKey === key}
-                        onClick={() => setIconKey(key)}
-                        className={cn(
-                          "flex items-center justify-center h-10 rounded-xl border transition-all duration-300",
-                          iconKey === key
-                            ? "border-violet-500 bg-violet-500/20 text-violet-400 shadow-[0_0_15px_rgba(139,92,246,0.3)]"
-                            : "border-white/10 bg-white/5 text-gray-400 hover:border-white/20 hover:text-white"
-                        )}
-                      >
-                        <Icon className="h-4.5 w-4.5" strokeWidth={2} />
-                      </button>
+                      <div key={key} className="relative group flex flex-col items-center">
+                        <button
+                          type="button"
+                          aria-label={key}
+                          aria-pressed={iconKey === key}
+                          onClick={() => setIconKey(key)}
+                          className={cn(
+                            "flex w-full items-center justify-center h-10 rounded-xl border transition-all duration-300",
+                            iconKey === key
+                              ? "border-blue-500 bg-blue-500/20 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+                              : "border-white/10 bg-white/5 text-gray-400 hover:border-white/20 hover:text-white"
+                          )}
+                        >
+                          <Icon className="h-5 w-5" strokeWidth={2} />
+                        </button>
+                        <div className="absolute -top-8 px-2 py-1 bg-gray-900 border border-white/10 text-white text-[10px] font-medium rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-xl">
+                          {formatIconName(key)}
+                        </div>
+                      </div>
                     );
                   })}
                 </div>
               </div>
 
+              {iconKey === 'other' && (
+                <div className="space-y-1.5">
+                  <Label htmlFor="goal-title">Goal name</Label>
+                  <Input
+                    id="goal-title"
+                    placeholder="e.g. New laptop"
+                    value={title}
+                    onChange={(e) => { setTitle(e.target.value); setFormError(null); }}
+                    maxLength={MAX_GOAL_TITLE_LENGTH}
+                    required
+                  />
+                </div>
+              )}
+
               <div className="space-y-1.5">
-                <Label htmlFor="goal-title">Goal name</Label>
+                <Label htmlFor="goal-desc">Description <span className="text-gray-400 font-normal text-xs">(optional)</span></Label>
                 <Input
-                  id="goal-title"
-                  placeholder="e.g. New laptop"
-                  value={title}
-                  onChange={(e) => { setTitle(e.target.value); setFormError(null); }}
-                  maxLength={MAX_GOAL_TITLE_LENGTH}
-                  required
+                  id="goal-desc"
+                  placeholder="e.g. For my next vacation"
+                  value={description}
+                  onChange={(e) => { setDescription(e.target.value); setFormError(null); }}
+                  maxLength={100}
                 />
               </div>
 
@@ -207,7 +230,7 @@ export function Goals() {
       )}
 
       {goals.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 text-center">
+        <div className="flex flex-col items-center justify-center py-12 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/5 border border-white/5 shadow-[0_0_15px_rgba(255,255,255,0.02)] mb-5">
             <Target className="h-7 w-7 text-gray-500" />
           </div>

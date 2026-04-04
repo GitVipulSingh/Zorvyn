@@ -32,7 +32,7 @@ export function GoalCard({ goal, index }: Props) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.04, duration: 0.3 }}
         className={cn(
-          "rounded-3xl glass-panel p-6 transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] relative overflow-hidden group",
+          "rounded-3xl glass-panel p-5 transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.2)] relative overflow-hidden group",
           isComplete ? "border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.05)]" : "border-white/5"
         )}
       >
@@ -43,17 +43,18 @@ export function GoalCard({ goal, index }: Props) {
             <div
               className={cn(
                 "flex h-12 w-12 items-center justify-center rounded-2xl flex-shrink-0 transition-colors duration-300",
-                isComplete ? "bg-emerald-500/10 shadow-[0_0_15px_rgba(16,185,129,0.2)]" : "bg-violet-500/10 shadow-[0_0_15px_rgba(139,92,246,0.2)]"
+                isComplete ? "bg-emerald-500/10 shadow-[0_0_15px_rgba(16,185,129,0.2)]" : "bg-blue-500/10 shadow-[0_0_15px_rgba(59,130,246,0.2)]"
               )}
             >
               {isComplete ? (
                 <CheckCircle2 className="h-6 w-6 text-emerald-400" />
               ) : (
-                <Icon className="h-6 w-6 text-violet-400" strokeWidth={2} />
+                <Icon className="h-6 w-6 text-blue-400" strokeWidth={2} />
               )}
             </div>
             <div>
               <p className="font-semibold text-base text-white tracking-wide">{goal.title}</p>
+              {goal.description && <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">{goal.description}</p>}
               <p className="text-xs text-gray-400 mt-1">
                 <span className="text-gray-200 font-medium">
                   {formatCurrency(goal.savedAmount, user.currency)}

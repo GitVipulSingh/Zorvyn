@@ -14,7 +14,7 @@ export function InsightCard({
   icon: Icon,
   title,
   description,
-  accent = "text-violet-600",
+  accent = "text-blue-600",
   index = 0,
 }: Props) {
   return (

@@ -11,7 +11,7 @@ export function Activity() {
   const { monthlyTotal } = useMonthlyStats(transactions);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-white tracking-wide">Activity</h1>
@@ -32,7 +32,7 @@ export function Activity() {
         />
       </div>
 
-      <div className="rounded-3xl border border-white/5 bg-white/[0.02] shadow-sm p-5 sm:p-6 backdrop-blur-md">
+      <div className="rounded-3xl border border-white/5 bg-white/[0.02] shadow-sm p-4 sm:p-5 backdrop-blur-md">
         <ExpenseList />
       </div>
     </div>

@@ -15,24 +15,26 @@ import { BarChart3 } from "lucide-react";
 import { useFinanceStore } from "@/store/useFinanceStore";
 import { useInsights } from "@/hooks/useInsights";
 import { InsightCard } from "@/components/InsightCard";
-import { MoodIndicator } from "@/components/MoodIndicator";
+import { WellnessCard } from "@/components/WellnessCard";
+import { useWellnessScore } from "@/hooks/useWellnessScore";
 import { formatCurrency } from "@/utils/format";
 
 export function Insights() {
   const { transactions, user } = useFinanceStore();
   const { chartData, insights } = useInsights(transactions, user);
+  const wellnessData = useWellnessScore(transactions, user);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
         <h1 className="text-3xl font-bold text-white tracking-wide">Insights</h1>
         <p className="text-sm text-gray-400 mt-1">Your spending story this month</p>
       </div>
 
-      <MoodIndicator />
+      <WellnessCard data={wellnessData} />
 
       {transactions.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 text-center">
+        <div className="flex flex-col items-center justify-center py-12 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-white/5 border border-white/5 shadow-[0_0_15px_rgba(255,255,255,0.02)] mb-5">
             <BarChart3 className="h-7 w-7 text-gray-500" />
           </div>
@@ -51,7 +53,7 @@ export function Insights() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className="rounded-3xl border border-white/5 bg-white/[0.02] p-5 sm:p-6 shadow-sm backdrop-blur-md"
+                className="rounded-3xl border border-white/5 bg-white/[0.02] p-4 sm:p-5 shadow-sm backdrop-blur-md"
               >
                 <p className="text-sm font-bold tracking-wide text-white mb-5">
                   Spending by Category
@@ -110,7 +112,7 @@ export function Insights() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.05 }}
-                className="rounded-3xl border border-white/5 bg-white/[0.02] p-5 sm:p-6 shadow-sm backdrop-blur-md"
+                className="rounded-3xl border border-white/5 bg-white/[0.02] p-4 sm:p-5 shadow-sm backdrop-blur-md"
               >
                 <p className="text-sm font-bold tracking-wide text-white mb-5">
                   Amount by Category
@@ -171,7 +173,7 @@ export function Insights() {
             <h2 className="text-sm font-bold tracking-wide text-white mb-4">Key Takeaways</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {insights.map((insight, i) => (
-                <InsightCard key={i} {...insight} index={i} />
+                <InsightCard key={i} {...insight} index={i} /> /* Re-import InsightCard since it was removed by top replacement */
               ))}
             </div>
           </div>

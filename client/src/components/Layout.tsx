@@ -48,7 +48,7 @@ function NavItem({
           <Icon
             className={cn(
               "h-5 w-5 flex-shrink-0 transition-colors duration-300",
-              isActive ? "text-violet-400" : "text-gray-500 hover:text-violet-400"
+              isActive ? "text-blue-400" : "text-gray-500 hover:text-blue-400"
             )}
             strokeWidth={isActive ? 2.5 : 2}
           />
@@ -76,14 +76,14 @@ export function Layout() {
       <aside className="hidden lg:flex flex-col w-64 shrink-0 glass-panel-elevated m-6 rounded-3xl h-[calc(100vh-3rem)] sticky top-6 z-40">
         {/* Logo */}
         <div className="flex items-center gap-3 px-6 py-6 border-b border-white/5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-600 shadow-[0_0_20px_rgba(139,92,246,0.4)]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 shadow-[0_0_20px_rgba(59,130,246,0.4)]">
             <Wallet className="h-5 w-5 text-white" strokeWidth={2.5} />
           </div>
           <span className="font-bold text-white text-xl tracking-wide">Zorvyn</span>
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 px-4 py-6 space-y-2">
+        <nav className="flex-1 px-4 py-2 space-y-1">
           {navItems.map(({ to, icon, label }) => (
             <NavItem key={to} to={to} icon={icon} label={label} end={to === "/"} />
           ))}
@@ -100,7 +100,7 @@ export function Layout() {
         {/* Mobile header */}
         <header className="lg:hidden sticky top-0 z-40 flex items-center justify-between border-b border-white/10 glass-panel-elevated rounded-b-2xl px-5 py-4 mx-2">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-600 shadow-[0_0_15px_rgba(139,92,246,0.4)]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 shadow-[0_0_15px_rgba(59,130,246,0.4)]">
               <Wallet className="h-4 w-4 text-white" strokeWidth={2.5} />
             </div>
             <span className="font-bold text-white text-lg tracking-wide">Zorvyn</span>
@@ -109,7 +109,7 @@ export function Layout() {
 
         {/* Page */}
         <main className="flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-5xl px-4 py-8 lg:px-6 pb-28 lg:pb-8">
+          <div className="mx-auto max-w-5xl px-4 py-5 lg:px-6 pb-28 lg:pb-8">
             <Outlet />
           </div>
         </main>
@@ -132,7 +132,7 @@ export function Layout() {
                 {({ isActive }) => (
                   <>
                     <Icon
-                      className={cn("h-5 w-5 mb-0.5 transition-colors duration-300", isActive ? "text-violet-400" : "")}
+                      className={cn("h-5 w-5 mb-0.5 transition-colors duration-300", isActive ? "text-blue-400" : "")}
                       strokeWidth={isActive ? 2.5 : 2}
                     />
                     {label}

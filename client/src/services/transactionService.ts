@@ -11,7 +11,8 @@ function isValidTransaction(t: unknown): t is Transaction {
     typeof obj.category === "string" &&
     typeof obj.date === "string" &&
     typeof obj.note === "string" &&
-    CATEGORIES.includes(obj.category as Transaction["category"])
+    CATEGORIES.includes(obj.category as Transaction["category"]) &&
+    (obj.intent === undefined || ["Need", "Want", "Investment", "Regret"].includes(obj.intent as string))
   );
 }
 

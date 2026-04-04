@@ -7,12 +7,15 @@ export type Category =
   | "Bills & Utilities"
   | "Other";
 
+export type Intent = "Need" | "Want" | "Investment" | "Regret";
+
 export interface Transaction {
   id: string;
   amount: number;
   category: Category;
   date: string;
   note: string;
+  intent?: Intent;
 }
 
 export interface Goal {
@@ -21,6 +24,7 @@ export interface Goal {
   targetAmount: number;
   savedAmount: number;
   iconKey: string;
+  description?: string;
 }
 
 export type Mood = "Good" | "Okay" | "Warning";

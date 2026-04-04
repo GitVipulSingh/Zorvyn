@@ -71,9 +71,9 @@ export function Profile() {
       label: "Goals",
       value: String(goals.length),
       icon: Target,
-      color: "text-violet-400",
-      bg: "bg-violet-500/10",
-      border: "border-violet-500/20"
+      color: "text-blue-400",
+      bg: "bg-blue-500/10",
+      border: "border-blue-500/20"
     },
     {
       label: "Total Saved",
@@ -86,7 +86,7 @@ export function Profile() {
   ];
 
   return (
-    <div className="space-y-6 max-w-2xl">
+    <div className="space-y-4 max-w-2xl">
       <div>
         <h1 className="text-3xl font-bold text-white tracking-wide">Settings</h1>
         <p className="text-sm text-gray-400 mt-1">Manage your preferences</p>

@@ -21,10 +21,10 @@ export function BalanceCard() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="relative overflow-hidden rounded-3xl glass-panel p-6 sm:p-8"
+      className="relative overflow-hidden rounded-3xl glass-panel p-4 sm:p-5"
     >
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-violet-600/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-emerald-500/10 rounded-full blur-[60px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
 
       <div className="relative z-10">
@@ -36,10 +36,10 @@ export function BalanceCard() {
             <p className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
               {formatCurrency(user.monthlyBudget, user.currency)}
             </p>
-            <p className="text-violet-400 text-sm mt-1 sm:mt-2 font-medium">{monthName}</p>
+            <p className="text-blue-400 text-sm mt-1 sm:mt-2 font-medium">{monthName}</p>
           </div>
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
-            <DollarSign className="h-6 w-6 text-violet-400" />
+            <DollarSign className="h-6 w-6 text-blue-400" />
           </div>
         </div>
 
@@ -50,7 +50,7 @@ export function BalanceCard() {
               initial={{ width: 0 }}
               animate={{ width: `${spendPercent}%` }}
               transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
-              className={`h-full rounded-full shadow-[0_0_15px_rgba(139,92,246,0.6)] ${isOver ? "bg-rose-500" : "bg-violet-500"}`}
+              className={`h-full rounded-full shadow-[0_0_15px_rgba(59,130,246,0.6)] ${isOver ? "bg-rose-500" : "bg-blue-500"}`}
             />
           </div>
           <div className="flex justify-between items-center mt-2.5">
@@ -62,7 +62,7 @@ export function BalanceCard() {
         <div className="grid grid-cols-2 gap-4">
           <div className="rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/5 px-4 py-3">
             <div className="flex items-center gap-2 text-gray-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider mb-1.5">
-              <TrendingDown className="h-3.5 w-3.5 text-violet-400" />
+              <TrendingDown className="h-3.5 w-3.5 text-blue-400" />
               Spent
             </div>
             <p className="font-bold text-white text-base sm:text-lg tracking-wide">

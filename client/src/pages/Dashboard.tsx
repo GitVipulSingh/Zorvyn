@@ -17,12 +17,12 @@ export function Dashboard() {
   const { topCategories, monthlyTotal } = useMonthlyStats(transactions);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Page header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-white tracking-wide">
-            Good to see you, <span className="text-violet-400 drop-shadow-[0_0_8px_rgba(139,92,246,0.3)]">{user.name}</span>
+            Good to see you, <span className="text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.3)]">{user.name}</span>
           </h1>
           <p className="text-sm text-gray-400 mt-1">
             Here's your financial overview
@@ -77,7 +77,7 @@ export function Dashboard() {
             <h2 className="text-sm font-bold tracking-wide text-white">Top Categories</h2>
             <Link
               to="/insights"
-              className="flex items-center gap-1 text-xs text-violet-400 font-medium hover:text-violet-300 transition-colors"
+              className="flex items-center gap-1 text-xs text-blue-400 font-medium hover:text-blue-300 transition-colors"
             >
               View insights <ArrowRight className="h-3 w-3" />
             </Link>
@@ -110,7 +110,7 @@ export function Dashboard() {
           <h2 className="text-sm font-bold tracking-wide text-white">Recent Transactions</h2>
           <Link
             to="/activity"
-            className="flex items-center gap-1 text-xs text-violet-400 font-medium hover:text-violet-300 transition-colors"
+            className="flex items-center gap-1 text-xs text-blue-400 font-medium hover:text-blue-300 transition-colors"
           >
             See all <ArrowRight className="h-3 w-3" />
           </Link>
@@ -122,7 +122,7 @@ export function Dashboard() {
       <div className="fixed bottom-20 right-4 z-30 sm:hidden">
         <AddExpenseModal
           trigger={
-            <button className="flex h-14 w-14 items-center justify-center rounded-full bg-violet-600 text-white shadow-[0_0_20px_rgba(139,92,246,0.6)] hover:bg-violet-500 hover:shadow-[0_0_30px_rgba(139,92,246,0.8)] transition-all">
+            <button className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-[0_0_20px_rgba(59,130,246,0.6)] hover:bg-blue-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-all">
               <Plus className="h-6 w-6" />
             </button>
           }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Plus } from "lucide-react";
+import { Plus, Heart, Sparkles, TrendingUp, AlertCircle } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -22,17 +22,23 @@ import { useTransactionForm } from "@/hooks/useTransactionForm";
 import { useFinanceStore } from "@/store/useFinanceStore";
 import { CATEGORIES, categoryConfig } from "@/utils/categoryConfig";
 import { getCurrencySymbol } from "@/utils/format";
-import { Transaction } from "@/types";
+import { Transaction, Intent } from "@/types";
+import { cn } from "@/lib/utils";
 
 interface Props {
   trigger?: React.ReactNode;
   editData?: Transaction;
   onClose?: () => void;
-  /** Controlled open state (omit for uncontrolled / trigger-based usage) */
   open?: boolean;
-  /** Called when the dialog wants to change its open state */
   onOpenChange?: (open: boolean) => void;
 }
+
+const INTENT_OPTIONS: { value: Intent; label: string; icon: any; color: string; bgClass: string; borderClass: string }[] = [
+  { value: "Need", label: "Need", icon: Heart, color: "text-blue-400", bgClass: "bg-blue-500/10", borderClass: "border-blue-500/20" },
+  { value: "Want", label: "Want", icon: Sparkles, color: "text-blue-400", bgClass: "bg-blue-500/10", borderClass: "border-blue-500/20" },
+  { value: "Investment", label: "Growth", icon: TrendingUp, color: "text-emerald-400", bgClass: "bg-emerald-500/10", borderClass: "border-emerald-500/20" },
+  { value: "Regret", label: "Regret", icon: AlertCircle, color: "text-rose-400", bgClass: "bg-rose-500/10", borderClass: "border-rose-500/20" },
+];
 
 export function AddExpenseModal({
   trigger,
@@ -44,7 +50,6 @@ export function AddExpenseModal({
   const { user } = useFinanceStore();
   const symbol = getCurrencySymbol(user.currency);
 
-  // Support both controlled and uncontrolled modes
   const [internalOpen, setInternalOpen] = useState(false);
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -62,7 +67,6 @@ export function AddExpenseModal({
 
   useEffect(() => {
     if (!open) reset();
-    // reset is stable within a render cycle; suppress the dep warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
@@ -88,7 +92,7 @@ export function AddExpenseModal({
       )}
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{editData ? "Edit Expense" : "Add Expense"}</DialogTitle>
+          <DialogTitle className="text-white tracking-wide">{editData ? "Edit Expense" : "Add Expense"}</DialogTitle>
         </DialogHeader>
         <motion.form
           initial={{ opacity: 0, y: 6 }}
@@ -97,54 +101,52 @@ export function AddExpenseModal({
           onSubmit={handleSubmit}
           className="space-y-4"
         >
-          {/* Amount */}
-          <div className="space-y-1.5">
-            <Label htmlFor="amount">Amount</Label>
-            <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-medium">
-                {symbol}
-              </span>
-              <Input
-                id="amount"
-                type="number"
-                placeholder="0.00"
-                className="pl-7"
-                value={form.amount}
-                onChange={(e) => setField("amount", e.target.value)}
-                min="0.01"
-                step="0.01"
-                autoFocus
-              />
+          {/* Amount and Category horizontally on desktop */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="amount">Amount</Label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-medium">
+                  {symbol}
+                </span>
+                <Input
+                  id="amount"
+                  type="number"
+                  placeholder="0.00"
+                  className="pl-7"
+                  value={form.amount}
+                  onChange={(e) => setField("amount", e.target.value)}
+                  min="0.01"
+                  step="0.01"
+                  autoFocus
+                />
+              </div>
             </div>
-            {error && (
-              <p className="text-xs text-red-500 flex items-center gap-1">{error}</p>
-            )}
-          </div>
 
-          {/* Category */}
-          <div className="space-y-1.5">
-            <Label>Category</Label>
-            <Select
-              value={form.category}
-              onValueChange={(v) => setField("category", v as typeof form.category)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {CATEGORIES.map((cat) => {
-                  const { icon: Icon } = categoryConfig[cat];
-                  return (
-                    <SelectItem key={cat} value={cat}>
-                      <span className="flex items-center gap-2">
-                        <Icon className="h-3.5 w-3.5 text-gray-400" strokeWidth={2} />
-                        {cat}
-                      </span>
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
+            <div className="space-y-1.5">
+              <Label>Category</Label>
+              <Select
+                value={form.category}
+                onValueChange={(v) => setField("category", v as typeof form.category)}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {CATEGORIES.map((cat) => {
+                    const { icon: Icon } = categoryConfig[cat];
+                    return (
+                      <SelectItem key={cat} value={cat}>
+                        <span className="flex items-center gap-2">
+                          <Icon className="h-3.5 w-3.5 text-gray-400" strokeWidth={2} />
+                          {cat}
+                        </span>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {/* Date */}
@@ -159,11 +161,42 @@ export function AddExpenseModal({
             />
           </div>
 
+          {/* Intent Toggles */}
+          <div className="space-y-2 pt-1 border-t border-white/5 mt-2">
+            <Label>
+              Spending Intent <span className="text-gray-500 font-normal text-[10px] uppercase ml-1 tracking-widest">(Mindful Tracking)</span>
+            </Label>
+            <div className="grid grid-cols-4 gap-2">
+              {INTENT_OPTIONS.map((opt) => {
+                const isSelected = form.intent === opt.value;
+                const Icon = opt.icon;
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setField("intent", isSelected ? "" : opt.value)}
+                    className={cn(
+                      "flex flex-col items-center justify-center py-2.5 rounded-xl border transition-all duration-300",
+                      isSelected
+                        ? `${opt.bgClass} ${opt.borderClass}`
+                        : "border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10"
+                    )}
+                  >
+                    <Icon className={cn("h-4 w-4 mb-1.5 transition-colors duration-300", isSelected ? opt.color : "text-gray-500")} strokeWidth={2} />
+                    <span className={cn("text-[10px] font-bold tracking-wider uppercase transition-colors duration-300", isSelected ? opt.color : "text-gray-500")}>
+                      {opt.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Note */}
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 pt-1 border-t border-white/5 mt-2">
             <Label htmlFor="note">
               Note{" "}
-              <span className="text-gray-400 font-normal text-xs">(optional)</span>
+              <span className="text-gray-500 font-normal text-xs">(optional)</span>
             </Label>
             <Input
               id="note"
@@ -173,6 +206,10 @@ export function AddExpenseModal({
               maxLength={200}
             />
           </div>
+
+          {error && (
+            <p className="text-xs text-rose-500 flex items-center gap-1 font-medium drop-shadow-[0_0_5px_rgba(244,63,94,0.3)]">{error}</p>
+          )}
 
           <Button type="submit" className="w-full" size="lg">
             {editData ? "Save Changes" : "Add Expense"}

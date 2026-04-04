@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trash2, Pencil, Receipt } from "lucide-react";
+import { Trash2, Pencil, Receipt, Heart, Sparkles, TrendingUp, AlertCircle } from "lucide-react";
 import { useFinanceStore } from "@/store/useFinanceStore";
 import { categoryConfig } from "@/utils/categoryConfig";
 import { formatCurrency } from "@/utils/format";
@@ -101,10 +101,16 @@ export function ExpenseList({ limit }: Props) {
                       >
                         {Icon && <Icon className={cn("h-5 w-5", text)} strokeWidth={2} />}
                       </div>
-                      <div className="flex-1 min-w-0 relative z-10">
-                        <p className="font-semibold text-sm text-white tracking-wide truncate">
-                          {tx.category}
-                        </p>
+                      <div className="flex-1 min-w-0 relative z-10 flex flex-col justify-center">
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold text-sm text-white tracking-wide truncate">
+                            {tx.category}
+                          </p>
+                          {tx.intent === "Need" && <Heart className="h-3 w-3 text-blue-400" strokeWidth={3} />}
+                          {tx.intent === "Want" && <Sparkles className="h-3 w-3 text-blue-400" strokeWidth={3} />}
+                          {tx.intent === "Investment" && <TrendingUp className="h-3 w-3 text-emerald-400" strokeWidth={3} />}
+                          {tx.intent === "Regret" && <AlertCircle className="h-3 w-3 text-rose-400" strokeWidth={3} />}
+                        </div>
                         {tx.note && (
                           <p className="text-xs text-gray-400 truncate mt-1">
                             {tx.note}

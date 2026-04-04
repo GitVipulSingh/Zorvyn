@@ -10,6 +10,8 @@ import {
   Palmtree,
   PiggyBank,
   Target,
+  MoreHorizontal,
+  Camera,
   type LucideIcon,
 } from "lucide-react";
 
@@ -24,6 +26,8 @@ export const goalIconMap: Record<string, LucideIcon> = {
   dumbbell: Dumbbell,
   palmtree: Palmtree,
   "piggy-bank": PiggyBank,
+  camera: Camera,
+  other: MoreHorizontal,
 };
 
 export function getGoalIcon(key: string): LucideIcon {
